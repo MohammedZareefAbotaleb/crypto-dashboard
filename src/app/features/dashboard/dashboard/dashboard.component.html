@@ -1,0 +1,8 @@
+<app-search-crypto
+    (searchChange)="onSearch($event)"
+    (clearSearch)="onClear()"
+  ></app-search-crypto>
+<app-crypto-table
+    [cryptos]="cryptos"
+    [headers]="headers"
+  ></app-crypto-table>
