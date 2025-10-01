@@ -1,12 +1,12 @@
-<div class="flex items-center gap-2 mb-4">
+<div class="w-full grid grid-cols-12 gap-2 mb-4">
   <input [(ngModel)]="term"
          placeholder="Search crypto..."
-         class="border rounded px-2 py-1 w-64"
+         class="col-span-4 col-start-5 border rounded border-blue-500 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
          (input)="onInput()" />
 
-  <button *ngIf="term" 
+  <button  *ngIf="term"
           (click)="clear()" 
-          class="bg-gray-400 text-white px-3 py-1 rounded">
+          class="bg-blue-500 text-white px-3 py-1 rounded border-2 border-transparent hover:bg-white hover:text-blue-500 hover:border-blue-500 transition">
     Clear
   </button>
 </div>

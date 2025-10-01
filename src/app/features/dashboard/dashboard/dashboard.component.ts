@@ -3,6 +3,7 @@ import { DashboardModule } from '../dashboard.module';
 import { CoinMarket } from '../../../core/interfaces/coin-interface';
 import { interval, startWith, Subscription, switchMap } from 'rxjs';
 import { TopcryptoService } from '../../../core/services/topcrypto.service';
+import { MassageService } from '../../../core/services/massage.service';
 @Component({
   selector: 'app-dashboard',
   standalone: false,
@@ -13,14 +14,24 @@ export class DashboardComponent {
 
   cryptos: CoinMarket[] = [];
   headers: string[] = ['#', 'Name', 'Price', 'Market Cap', '24h %', 'last 7d'];
+  isLoading: boolean = true;
+  errorMessage: string = '';
 
   private pollSub?: Subscription;
-  private searchQuery: string = ''; // store search query (name)
+  private msgSub?: Subscription;
+  public searchQuery: string = '';
 
-  constructor(private topcrypto: TopcryptoService) {}
+  constructor(
+    private topcrypto: TopcryptoService,
+    private messageService: MassageService,
+  ) {}
 
   ngOnInit(): void {
     this.startPolling();
+
+    this.msgSub = this.messageService.message$.subscribe(msg => {
+      this.errorMessage = msg;
+    });
   }
 
   ngOnDestroy(): void {
@@ -33,6 +44,9 @@ export class DashboardComponent {
       startWith(0),
       switchMap(() => this.loadData())
     ).subscribe(data => this.cryptos = data);
+    if (this.cryptos.length > 0) {
+        this.errorMessage = '';
+      }
   }
 
   private stopPolling() {
@@ -41,20 +55,19 @@ export class DashboardComponent {
 
   private loadData() {
     if (this.searchQuery.trim().length > 0) {
-      // search with query (name or partial)
       return this.topcrypto.searchCoins(this.searchQuery);
     }
-    // default top 10 coins
+    this.isLoading = false;
     return this.topcrypto.getTop10Coins();
   }
 
-  // triggered by search component
   onSearch(query: string) {
+    this.isLoading = true;
     this.searchQuery = query;
-    this.startPolling(); // restart polling with new query
+    this.startPolling();
+    this.isLoading = false;
   }
 
-  // clear search and show top 10
   onClear() {
     this.searchQuery = '';
     this.startPolling();

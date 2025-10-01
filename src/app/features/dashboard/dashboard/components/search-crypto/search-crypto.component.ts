@@ -12,25 +12,27 @@ export class SearchCryptoComponent {
 
   term = '';
 
-@Output() searchChange = new EventEmitter<string>();
-@Output() clearSearch = new EventEmitter<void>();
+  @Output() searchChange = new EventEmitter<string>();
+  @Output() clearSearch = new EventEmitter<void>();
 
 private searchTimeout?: any;
 
-onInput() {
-  // debounce user typing (e.g. 400ms)
-  clearTimeout(this.searchTimeout);
-  this.searchTimeout = setTimeout(() => {
-    if (this.term.trim()) {
-      this.searchChange.emit(this.term.trim().toLowerCase());
-    } else {
-      this.clearSearch.emit();
+  onInput() {
+    clearTimeout(this.searchTimeout);
+    if (this.term.trim().length === 0) {
+      return;
     }
-  }, 400);
-}
+    this.searchTimeout = setTimeout(() => {
+      if (this.term.trim()) {
+        this.searchChange.emit(this.term.trim().toLowerCase());
+      } else {
+        this.clearSearch.emit();
+      }
+    }, 500);
+  }
 
-clear() {
-  this.term = '';
-  this.clearSearch.emit();
-}
+  clear() {
+    this.term = '';
+    this.clearSearch.emit();
+  }
 }

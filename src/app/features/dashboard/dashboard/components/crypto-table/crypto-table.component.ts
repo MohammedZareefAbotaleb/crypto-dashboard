@@ -14,5 +14,4 @@ import { SharedModule } from '../../../../../shared/shared/shared.module';
 export class CryptoTableComponent {
   @Input() cryptos: CoinMarket[] = [];
   @Input() headers: string[] = [];
-  loading = true;
 }

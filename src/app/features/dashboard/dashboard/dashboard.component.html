@@ -1,8 +1,17 @@
-<app-search-crypto
-    (searchChange)="onSearch($event)"
-    (clearSearch)="onClear()"
-  ></app-search-crypto>
-<app-crypto-table
-    [cryptos]="cryptos"
-    [headers]="headers"
-  ></app-crypto-table>
+<header class="flex flex-col items-center mb-2 gap-3 pt-4 bg-gradient-to-b from-blue-500">
+  <h1 class="text-white text-4xl" [class.text-blue-500]="searchQuery.trim().length > 0">Crypto Dashboard</h1>
+  <h2 class="text-lg text-[#71706E]" *ngIf="searchQuery.trim().length == 0 && !errorMessage">Track the top 10 cryptocurrencies in real-time</h2>
+  <span class="text-blue-500 text-2xl" *ngIf="searchQuery.trim().length == 0 && !errorMessage">Or</span>
+  <span class="text-blue-500 text-2xl" *ngIf="errorMessage">{{errorMessage}}</span>
+</header>
+<section class="w-[90%] mx-auto">
+  <app-search-crypto
+      (searchChange)="onSearch($event)"
+      (clearSearch)="onClear()"
+    ></app-search-crypto>
+  <app-crypto-table
+      [cryptos]="cryptos"
+      [headers]="headers"
+    ></app-crypto-table>
+</section>
+<app-spinner [show]="isLoading"></app-spinner>
