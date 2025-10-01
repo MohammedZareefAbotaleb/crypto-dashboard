@@ -1,68 +1,45 @@
-📊 Crypto Dashboard
+ Crypto Dashboard
 
 An Angular-based dashboard that fetches and displays live cryptocurrency market data (top 10 coins by market cap or searched coins) from the CoinGecko API
 .
 It includes real-time polling, a search function, and sparkline charts for price trends.
 
-🚀 Features
+------------------------------------------------------------------------------------------------------------------------------------
+ Features :-
 
-🔄 Polling every 30 seconds to keep data fresh
+ Polling every 30 seconds to keep data fresh
 
-🔍 Search for cryptocurrencies by name (partial matches supported)
+ Search for cryptocurrencies by name (partial matches supported)
 
-📈 Mini sparklines (powered by Chart.js) inside table cells
+ Mini sparklines (powered by Chart.js) inside table cells
 
-🎨 Responsive design with TailwindCSS
+ Responsive design with TailwindCSS
 
-📦 Modular Angular architecture with reusable components
-
-🏗️ Architecture
+ Modular Angular architecture with reusable components
+ 
+------------------------------------------------------------------------------------------------------------------------------------
+ Architecture :-
 
 The project is structured for scalability and clarity:
 
-DashboardComponent  :  Acts as the container for the table and search components & Handles polling logic (start/stop)
+DashboardComponent  :  Acts as the container for the table and search components & Handles polling logic (start/stop) Passes data to the table
 
-Passes data to the table
+CryptoTableComponent : Displays data in a responsive table Dynamically renders headers Shows sparkline charts inside table cells
 
-CryptoTableComponent
+SearchComponent : Provides an input for searching cryptos by name (real-time search as you type) Emits events back to DashboardComponent Includes a Clear button
 
-Displays data in a responsive table
+PriceChartComponent : A lightweight wrapper around Chart.js Renders sparklines (line charts with no axes/legend) Fully reusable in different contexts
 
-Dynamically renders headers
+TopcryptoService : Handles all API requests 
 
-Shows sparkline charts inside table cells
+Two main methods: getTop10Coins() → Fetches top 10 by market cap & searchCoins(query) → Fetches coins by name (partial matches) & Includes headers with API key
 
-SearchComponent
+429interceptor & massage service : handles error 429 for too many request and emits a massage to the dashboard.
 
-Provides an input for searching cryptos by name (real-time search as you type)
-
-Emits events back to DashboardComponent
-
-Includes a Clear button
-
-PriceChartComponent
-
-A lightweight wrapper around Chart.js
-
-Renders sparklines (line charts with no axes/legend)
-
-Fully reusable in different contexts
-
-TopcryptoService
-
-Handles all API requests
-
-Two main methods:
-
-getTop10Coins() → Fetches top 10 by market cap
-
-searchCoins(query) → Fetches coins by name (partial matches)
-
-Includes headers with API key
-
+------------------------------------------------------------------------------------------------------------------------------------
 📦 Libraries Used
 
-Angular 18 – Frontend framework
+Angular 19 – Frontend framework
 
 RxJS – For polling with interval, switchMap
 
@@ -70,7 +47,9 @@ HttpClientModule – API requests
 
 Chart.js – Sparkline rendering (with a custom wrapper component)
 
-TailwindCSS – Styling and responsive design
+TailwindCSS V3 – Styling and responsive design
+
+------------------------------------------------------------------------------------------------------------------------------------
 
 ⚙️ Setup & Run
 1. Clone the repo
@@ -86,6 +65,8 @@ ng serve
 
 
 App runs at http://localhost:4200
+
+------------------------------------------------------------------------------------------------------------------------------------
 
 📝 Notes on Decisions
 
